@@ -12,54 +12,57 @@ var main = function() {
   var currentDate = today.getFullYear() + "-" + pad2(today.getMonth()+1) + "-" + pad2(today.getDate());
   var currentHour = today.getHours();
   var rand = new Date( Math.floor(Math.random() * 10000000000000) );
-  var randomDate = rand.getFullYear() + "-" + pad2(rand.getMonth()+1) + "-" + pad2(rand.getDate());
+  var randomDate = rand.getFullYear() + "-" + pad2(rand.getMonth() + 1) + "-" + pad2(rand.getDate());
   console.log(randomDate);
 
   $.ajax(
     {
-      type: "get",
+      type: "GET",
       url: backend,
+      crossDomain: true,
+      dataType: "jsonp",
       data: {
-        date: currentDate
+        date: currentDate,
       },
       success: function(response) {
-        let data = JSON.parse(response);
         let $target = $('a#day');
-        $target.attr('href', data.data.href);
-        $target.text($target.text() + data.data.name);
+        $target.attr('href', response.data.href);
+        $target.text($target.text() + response.data.name);
       }
     }
   );
 
   $.ajax(
     {
-      type: "get",
+      type: "GET",
       url: backend,
+      crossDomain: true,
+      dataType: "jsonp",
       data: {
         date: currentDate,
         hour: currentHour
       },
       success: function(response) {
-        let data = JSON.parse(response);
         let $target = $('a#hour');
-        $target.attr('href', data.data.href);
-        $target.text($target.text() + data.data.name);
+        $target.attr('href', response.data.href);
+        $target.text($target.text() + response.data.name);
       }
     }
   );
 
   $.ajax(
     {
-      type: "get",
+      type: "GET",
       url: backend,
+      crossDomain: true,
+      dataType: "jsonp",
       data: {
         date: randomDate
       },
       success: function(response) {
-        let data = JSON.parse(response);
         let $target = $('a#random');
-        $target.attr('href', data.data.href);
-        $target.text($target.text() + data.data.name);
+        $target.attr('href', response.data.href);
+        $target.text($target.text() + response.data.name);
       }
     }
   );
